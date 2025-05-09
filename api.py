@@ -64,14 +64,14 @@ def get_similar_articles(article_id, embedding_dict, top_n=5):
     return [aid for aid, _ in sorted(sims.items(), key=lambda x: x[1], reverse=True)[:top_n]]
 
 # === Interface Streamlit ===
-st.title("🧠 Système de Recommandation d'Articles")
+st.title(" Système de Recommandation d'Articles")
 
 page = st.sidebar.radio("Navigation", [
     "Exploration", "Recommandation", "Vecteurs", "Comparer"
 ])
 
 if page == "Exploration":
-    st.header("🔍 Exploration des données")
+    st.header(" Exploration des données")
     st.write("### Aperçu des utilisateurs")
     st.dataframe(clicks_df.head())
     st.write("### Aperçu des articles")
@@ -99,7 +99,7 @@ elif page == "Recommandation":
         st.warning("Aucune recommandation disponible pour ce choix.")
 
 elif page == "Vecteurs":
-    st.header("📊 Vecteur d'un article")
+    st.header(" Vecteur d'un article")
     article_id = st.selectbox("Article à explorer", list(embeddings.keys())[:100])
     vecteur = embeddings.get(article_id)
     if vecteur is not None:
@@ -108,7 +108,7 @@ elif page == "Vecteurs":
         st.warning("Aucun vecteur disponible.")
 
 elif page == "Comparer":
-    st.header("📊 Comparaison des méthodes")
+    st.header(" Comparaison des méthodes")
     user_id = st.selectbox("Choisir un utilisateur", user_item_matrix.index)
     collab = recommend_by_collab(user_id, user_item_matrix)
     profile = build_user_profile(user_id, clicks_df, embeddings)
@@ -118,6 +118,6 @@ elif page == "Comparer":
     st.subheader("Embeddings")
     st.dataframe(articles_df[articles_df['article_id'].isin(embed)][['article_id']])
     overlap = set(collab) & set(embed)
-    st.markdown(f"### ✅ Overlap : {len(overlap)} article(s) commun(s)")
+    st.markdown(f"###  Overlap : {len(overlap)} article(s) commun(s)")
     if overlap:
         st.dataframe(articles_df[articles_df['article_id'].isin(overlap)][['article_id']])
